@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event to remove Checklist Row" >
+    <aura:attribute name="indexVar" type="Integer" description="Use For Delete Checklist Row" />
+    <aura:attribute name="recordId" type="String" />
+</aura:event>

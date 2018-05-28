@@ -1,0 +1,33 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="checklistRecord" type="Object"/>
+    <aura:attribute name="rowIndex" type="String"/>
+    
+    <aura:registerEvent name="DelCLRowEvt" type="c:DeleteChecklistTableRow"/> 
+    <aura:registerEvent name="AddCLRowEvt" type="c:AddChecklistTableRow"/>
+    
+    
+    <tr class="slds-text-title_caps">
+        <td>
+            {!v.rowIndex + 1}
+        </td>
+        <td>
+            <lightning:input label="" name="itemName" variant="label-hidden" value="{!v.checklistRecord.ChecklistItemName__c}"/>
+        </td>
+        <td>
+            <lightning:input label="" name="checklistDesc" variant="label-hidden" value="{!v.checklistRecord.Description__c}"/>
+        </td>
+        <td>
+            <lightning:input type="checkbox" label="" name="checklistDone" variant="label-hidden" checked="{!v.checklistRecord.Done__c}"/>
+        </td>
+        <td>
+            <aura:if isTrue="{!v.rowIndex == 0}">
+				<lightning:buttonIcon iconName="utility:add" variant="bare" onclick="{! c.addCLRow }" alternativeText="Add Checklist Row" />  
+            <aura:set attribute="else">
+				<lightning:buttonIcon iconName="utility:delete" variant="bare" onclick="{! c.delCLRow }" alternativeText="Delete Checklist Row" />  
+           	</aura:set> 
+            </aura:if>
+        </td> 
+    </tr>
+    
+    
+</aura:component>

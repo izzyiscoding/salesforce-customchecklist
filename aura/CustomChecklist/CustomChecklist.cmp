@@ -1,0 +1,65 @@
+<aura:component controller="CustomChecklistController" implements="force:appHostable,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" > 
+    <aura:attribute name="checklistRec" type="Object"/>
+    <aura:attribute name="checklistItemList" type="Object[]"/>
+    <aura:attribute name="checklistItemListDelete" type="String[]"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="DelCLRowEvt" event="c:DeleteChecklistTableRow" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddCLRowEvt" event="c:AddChecklistTableRow" action="{!c.addNewRow}"/>
+     
+    
+    <lightning:card iconName="standard:product_required" title="Checklist">
+                
+			<div class="slds-p-horizontal_small">
+                <lightning:input label="Checklist Name" name="chkListName" value="{!v.checklistRec.ChecklistName__c}"/>
+                <lightning:select label="Checklist Type" name="chkListType" value="{!v.checklistRec.ChecklistType__c}">
+                    <option value="">--Choose Type--</option>
+                    <option value="Task">Task</option>
+                    <option value="Troubleshooting">Troubleshooting</option>
+                    <option value="Coordination">Coordination</option>
+                    <option value="Discipline">Discipline</option>
+                    <option value="To-do">To-do</option>
+                </lightning:select>
+            </div>
+            
+            <br/>
+            
+        	<div>
+        		<table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="No">No.</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Item">Checklist Item</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Description">Description</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Done">Done?</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Actions">Actions</div>
+                            </th>
+                        </tr>
+                    </thead>   
+                    <tbody>
+                        <aura:iteration items="{!v.checklistItemList}" var="clitem" indexVar="index">
+                            <c:ChecklistTableItem checklistRecord="{!clitem}" rowIndex="{!index}"/>
+                        </aura:iteration>
+                    </tbody>
+    			</table>
+    		</div>
+                
+            <div id = "button-container" style = "margin: 15px;">        
+                <lightning:button class="slds-m-top_small" type="submit" label="Save" onclick="{! c.save}" />
+            </div>
+        
+        	<div>
+    			<lightning:spinner variant="brand" size="large" aura:id="spinner"/>
+    		</div>
+                
+    </lightning:card>
+</aura:component>
